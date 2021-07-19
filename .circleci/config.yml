@@ -10,5 +10,16 @@ jobs:
     steps:
       - run:
          command: |
-           $(echo hello | Out-Host; $?) -and $(echo world | Out-Host; $?)
+           $ProjectDir = Get-Location
+           $Url = "https://sourceforge.net/projects/signed-drivers/files/com0com/v3.0/com0com-3.0.0.0-i386-and-x64-signed.zip/download"
+           $Com0ComDir = "com0com"
+           $Com0ComZipFile = "com0com.zip"
+
+           Invoke-WebRequest -Uri $Url -OutFile $Com0ComZipFile -UserAgent [Microsoft.PowerShell.Commands.PSUserAgent]::FireFox
+           mkdir $Com0ComDir | Out-Null
+           Expand-Archive -Path $Com0ComZipFile -DestinationPath $Com0ComDir
+
+           Set-Location $Com0ComDir\amd64
+
+           ls
          shell: powershell.exe
