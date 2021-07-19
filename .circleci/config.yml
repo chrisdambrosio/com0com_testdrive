@@ -21,5 +21,12 @@ jobs:
 
            Set-Location $Com0ComDir\amd64
 
-           ls
+           echo "starting.."
+           ./setupc.exe --silent install - -
+           ./setupc.exe list
+           echo "finishing.."
+
+           Set-Location $ProjectDir
+
+           [System.IO.Ports.SerialPort]::getportnames()
          shell: powershell.exe
